@@ -1,21 +1,28 @@
-set_project("openindev")
+add_rules("mode.release", "mode.debug")
 
-set_xmakever("2.6.0")
+set_languages("cxx17")
+set_arch("x86_64")
 
-set_languages("c11")
+toolchain("gcc_windows")
+    set_kind("standalone")
+    set_toolset("cc", "gcc")
+    set_toolset("cxx", "g++")
+    set_toolset("ld", "g++")
+    set_toolset("ar", "ar")
+    set_toolset("strip", "strip")
 
-target("openindev")
-    set_kind("binary")  
-    add_files("src/*.c")
-    add_files("src/**/*.c") 
-    add_includedirs("src") 
-    add_defines("ENTRY_POINT=_main_")
-    if is_os("windows") then
-        add_linkdirs("lib/windows") 
-        add_ldflags("lib/windows/example-commonRelease.lib", {force = true})
-        add_links("bgfxRelease", "bimg_decodeRelease", "bimgRelease", "bxRelease", "example-commonRelease")
-        add_syslinks("gdi32", "user32", "shell32") 
-    else
-        add_linkdirs("lib/linux") 
-        --needs to be implemented, will do so later =) 
-    end
+
+target("main")
+    set_toolchains("gcc_windows")
+    set_kind("binary")
+    add_files("src/*.c", "src/externincludes/glad.c")
+    add_includedirs("src/externincludes")
+    add_defines("_WIN32_WINNT=0x0600", "WINVER=0x0600", "PSAPI_VERSION=1")
+    add_ldflags("-lpsapi")
+    add_links("SDL2", "SDL2.dll", "psapi")
+    add_linkdirs("lib")
+    set_optimize("fastest")
+    
+    after_build(function (target)
+        os.run(target:targetfile())
+    end)

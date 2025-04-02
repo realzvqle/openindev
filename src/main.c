@@ -1,56 +1,96 @@
-#define BGFX_IDL_CPP FALSE
-#define STDCALL __stdcall
+#include "externincludes/SDL2/SDL.h"
+#include "externincludes/SDL2/SDL_error.h"
+#include "externincludes/cglm/vec3.h"
+#include "externincludes/glad.h"
+#include <Windows.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include "externincludes/cglm/cglm.h"
+#define fail(message, ...) printf("[-] " message, ##__VA_ARGS__)
+#define pass(message, ...) printf("[+] " message, ##__VA_ARGS__)
+#define info(message, ...) printf("[!] " message, ##__VA_ARGS__)
 
-#include "bgfx/c99/bgfx.h"
 
+void render(float size) {
+    glClear(GL_COLOR_BUFFER_BIT);
 
-extern bool entry_process_events(uint32_t* _width, uint32_t* _height, uint32_t* _debug, uint32_t* _reset);
-extern void* entry_get_default_native_window_handle(void);
-extern void* entry_get_native_display_handle(void);
-extern bgfx_native_window_handle_type_t entry_get_native_window_handle_type(void);
+    glBegin(GL_TRIANGLES);
+    
+    float half = size / 2;
 
-uint16_t uint16_max(uint16_t _a, uint16_t _b)
-{
-	return _a < _b ? _b : _a;
+    glColor3f(1.0f, 0.0f, 0.0f); 
+    glVertex2f(-half, -half);
+    
+    glColor3f(0.0f, 1.0f, 0.0f); 
+    glVertex2f(half, -half);
+    
+    glColor3f(0.0f, 0.0f, 1.0f); 
+    glVertex2f(0.0f, half);
+    
+    glEnd();
 }
 
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+    SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX);
 
-int32_t _main_(){
-    uint32_t width  = 1600;
-	uint32_t height = 900;
-	uint32_t debug  = BGFX_DEBUG_TEXT;
-	uint32_t reset  = BGFX_RESET_VSYNC;
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        fail("Couldn't initialize SDL! %s\n", SDL_GetError());
+        return -1;
+    }
+    float h = 0;
+    float y = 0;
+    glm_vec3_dup(&h, &y);
 
-	bgfx_init_t init;
-	bgfx_init_ctor(&init);
+    SDL_Window* window = SDL_CreateWindow("Open Indev!",
+                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                          1600, 900,
+                                          SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+    if (!window) {
+        fail("Couldn't Create SDL Window! %s\n", SDL_GetError());
+        SDL_Quit();
+        return -1;
+    }
 
-	init.platformData.nwh = entry_get_default_native_window_handle();
-	init.platformData.ndt = entry_get_native_display_handle();
-	init.platformData.type = entry_get_native_window_handle_type();
-	bgfx_init(&init);
-    bgfx_reset(width, height, BGFX_RESET_VSYNC, init.resolution.format);
+    SDL_GLContext glContext = SDL_GL_CreateContext(window);
+    if (!glContext) {
+        fail("Couldn't Create OpenGL Context! %s\n", SDL_GetError());
 
-	bgfx_set_debug(debug);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
 
-	bgfx_set_view_clear(0
-		, BGFX_CLEAR_COLOR|BGFX_CLEAR_DEPTH
-		, 0xF03030ff
-		, 1.0f
-		, 1
-		);
+    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+        fail("Couldn't Start GLAD!\n");
+        SDL_GL_DeleteContext(glContext);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
 
-	while (!entry_process_events(&width, &height, &debug, &reset) )
-	{
-		bgfx_set_view_rect(0, 0, 0, (uint16_t)width, (uint16_t)height);
-		bgfx_encoder_t* encoder = bgfx_encoder_begin(true);
-		bgfx_encoder_touch(encoder, 0);
-		bgfx_encoder_end(encoder);
+    glViewport(0, 0, 800, 600);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1, 1, -1, 1, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-		bgfx_dbg_text_clear(0, false);
-		bgfx_dbg_text_printf(10, 10, 0xf, "Hello World!");
-		bgfx_frame(false);
-	}   
-	bgfx_shutdown();
+    bool running = true;
+    SDL_Event event;
+
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                running = false;
+            }
+        }
+
+        render(2);
+        SDL_GL_SwapWindow(window);
+    }
+    SDL_GL_DeleteContext(glContext);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
     return 0;
 }
-
