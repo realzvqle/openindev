@@ -3,3 +3,4 @@
 
 
 xmake
+xmake run

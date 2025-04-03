@@ -1,6 +1,6 @@
 add_rules("mode.release", "mode.debug")
 
-set_languages("cxx17")
+set_languages("c11")
 set_arch("x86_64")
 
 toolchain("gcc_windows")
@@ -15,7 +15,7 @@ toolchain("gcc_windows")
 target("main")
     set_toolchains("gcc_windows")
     set_kind("binary")
-    add_files("src/*.c", "src/externincludes/glad.c")
+    add_files("src/*.c", "src/**/*.c", "src/externincludes/glad.c")
     add_includedirs("src/externincludes")
     add_defines("_WIN32_WINNT=0x0600", "WINVER=0x0600", "PSAPI_VERSION=1")
     add_ldflags("-lpsapi")
@@ -23,6 +23,4 @@ target("main")
     add_linkdirs("lib")
     set_optimize("fastest")
     
-    after_build(function (target)
-        os.run(target:targetfile())
-    end)
+    
