@@ -1,4 +1,4 @@
-#include "control.h"
+#include "controls.h"
 
 #include "engine/render.h"
 #include "engine/window.h"

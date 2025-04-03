@@ -6,7 +6,6 @@
 #include "externincludes/SDL2/SDL_keycode.h"
 #include "externincludes/SDL2/SDL_video.h"
 #include "superheader.h"
-#include <winuser.h>
 
 typedef struct _Cube {
     vec3 position;
@@ -15,8 +14,13 @@ typedef struct _Cube {
 
 Cube cubes[512];
 static int amount = 0;
-
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+#ifdef _WIN32
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+#endif
+#ifndef _WIN32
+int main(int argc, char* argv[])
+#endif
+ {
     bool result = InitWindow(1600, 900, "Open Indev", 0);
     SetupCamera();
     if(result == false) return -1;

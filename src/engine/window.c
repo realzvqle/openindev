@@ -12,8 +12,9 @@ static SDL_KeyCode keydown;
 static SDL_KeyCode keypressed;
 
 bool InitWindow(int width, int height, const char* title, Uint32 flags){
+    #ifdef _WIN32
     SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX);
-    
+    #endif
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fail("Couldn't initialize SDL! %s\n", SDL_GetError());
         return -1;

@@ -9,7 +9,6 @@
 #include "externincludes/SDL2/SDL_events.h"
 #include "externincludes/cglm/vec3.h"
 #include "externincludes/glad.h"
-#include <Windows.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "externincludes/cglm/cglm.h"
