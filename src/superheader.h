@@ -16,7 +16,9 @@
 #define pass(message, ...) printf("[+] " message, ##__VA_ARGS__)
 #define info(message, ...) printf("[!] " message, ##__VA_ARGS__)
 
-
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 
 
