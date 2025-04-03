@@ -26,7 +26,6 @@ target("openindev")
         add_links("SDL2", "SDL2.dll", "psapi")
         add_syslinks("gdi32", "winmm") 
     else
-        add_linkdirs("lib/linux") 
         add_links("SDL2")
     end
     
