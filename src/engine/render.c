@@ -98,6 +98,8 @@ void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
     glPopMatrix();
 }
 
+
+
 void SetupCamera() {
     glm_vec3_copy((vec3){0.0f, 0.0f, -5.0f}, cam.pos);
     glm_vec3_copy((vec3){0.0f, 0.0f, 0.0f}, cam.target);

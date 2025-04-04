@@ -1,5 +1,6 @@
 #include "controls.h"
 #include "engine/internals.h"
+#include "engine/model.h"
 #include "engine/render.h"
 #include "engine/text.h"
 #include "engine/window.h"
@@ -14,14 +15,15 @@ typedef struct _Cube {
 
 Cube cubes[512];
 static int amount = 0;
+
 #ifdef _WIN32
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 #endif
 #ifndef _WIN32
 int main(int argc, char* argv[])
 #endif
- {
-    bool result = InitWindow(1600, 900, "Open Indev", 0);
+{
+    bool result = InitWindow(1600, 900, "Open Indev", SDL_WINDOW_RESIZABLE);
     SetupCamera();
     if(result == false) return -1;
     
@@ -29,12 +31,14 @@ int main(int argc, char* argv[])
     glm_vec3_copy((vec3){0.0, 0.0, -5.0}, cubes[amount].position);
     cubes[amount].position[2]+=1;
     amount++;
-
+    Model mod = LoadModel("resources/untitled.obj");
     while(IsWindowOpen()){
         UpdateCamera();
         char buffer[512];
         sprintf(buffer, "Open Indev - %d FPS", GetFPS());
         SetWindowTitle(buffer);
+        RenderModel(&mod, 0.2, (vec3){-0.5, -0.5, -5.0});
+        //DrawGameText(-0.5, -0.5, "Hello", 0.2);
         for(int i = 0; i < amount; i++){
             RenderCube(0.5, cubes[i].position, (vec3){0, 0, 0}, false);        
         } 

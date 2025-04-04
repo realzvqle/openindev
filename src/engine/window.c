@@ -94,6 +94,11 @@ bool IsWindowOpen(){
         if (event.type == SDL_QUIT) {
             running = false;
         }
+        if(event.type == SDL_WINDOWEVENT){
+            if(event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+                glViewport(0, 0, GetWindowWidth(), GetWindowHeight());
+            }
+        }
         if(event.type == SDL_KEYDOWN){
             keypressed = event.key.keysym.sym; 
             

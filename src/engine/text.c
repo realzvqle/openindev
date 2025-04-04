@@ -114,7 +114,7 @@ static inline void InGameDrawCharacter(float x, float y, float size, char c) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 6; j++) {
             if (bitmap[i] & (1 << j)) { 
-                RenderSquares(size, (vec3){x - j * size, y - i * size, 5.0}, (vec3){0.0, 0.0, 1.0});
+                RenderSquares_2(size, (vec3){x - j * size, y - i * size, 5.0});
             }
         }
     }
@@ -125,15 +125,16 @@ void DrawGameText(float x, float y, char* s, float size) {
     int current_x = x; 
     int current_y = y;
     int line_height = size * 10; 
-
-    while ((c = *s++)) { 
+    int i = strlen(s);
+    while (i >= 0) { 
         if (c == '\n') {
             current_y += line_height; 
             current_x = x; 
         } else {
-            InGameDrawCharacter(current_x, current_y, size, c);
+            InGameDrawCharacter(current_x, current_y, size, s[i]);
             current_x += size * 10; 
         }
+        i--;
     }
 }
 
