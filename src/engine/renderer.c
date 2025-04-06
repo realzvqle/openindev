@@ -1,9 +1,17 @@
-#include "render.h"
+#include "renderer.h"
 #include "text.h"
 #include "window.h"
 
 
-Camera cam;
+
+
+/*
+
+    Open-Indev Renderer  
+
+*/
+
+Camera g_Cam;
 
 
 
@@ -101,13 +109,13 @@ void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
 
 
 void SetupCamera() {
-    glm_vec3_copy((vec3){0.0f, 0.0f, -5.0f}, cam.pos);
-    glm_vec3_copy((vec3){0.0f, 0.0f, 0.0f}, cam.target);
-    glm_vec3_copy((vec3){0.0f, 1.0f, 0.0f}, cam.up);
-    cam.fovy = glm_rad(90.0f);
+    glm_vec3_copy((vec3){0.0f, 0.0f, -5.0f}, g_Cam.pos);
+    glm_vec3_copy((vec3){0.0f, 0.0f, 0.0f}, g_Cam.target);
+    glm_vec3_copy((vec3){0.0f, 1.0f, 0.0f}, g_Cam.up);
+    g_Cam.fovy = glm_rad(90.0f);
 
     mat4 perspective_matrix;
-    glm_perspective(cam.fovy, (float)GetWindowWidth()/GetWindowHeight(), 0.1f, 1000.0f, perspective_matrix);
+    glm_perspective(g_Cam.fovy, (float)GetWindowWidth()/GetWindowHeight(), 0.1f, 1000.0f, perspective_matrix);
 
     glMatrixMode(GL_PROJECTION);
     glLoadMatrixf((const float*)perspective_matrix);
@@ -118,37 +126,37 @@ void SetupCamera() {
 }
 
 void ChangeCameraPositionX(float amount){
-    cam.pos[0] += amount;
+    g_Cam.pos[0] += amount;
 }
 
 void ChangeCameraPositionY(float amount){
-    cam.pos[1] += amount;
+    g_Cam.pos[1] += amount;
 }
 
 void ChangeCameraPositionZ(float amount){
-    cam.pos[2] += amount; 
+    g_Cam.pos[2] += amount; 
 }
 
 void UpdateCamera() {
     mat4 view_matrix;
-    glm_lookat(cam.pos, cam.target, cam.up, view_matrix);
+    glm_lookat(g_Cam.pos, g_Cam.target, g_Cam.up, view_matrix);
     glMatrixMode(GL_MODELVIEW);
     glLoadMatrixf((const float*)view_matrix);
 }
 
 
 float* GetCameraPositionAll(){
-    return cam.pos;
+    return g_Cam.pos;
 }
 
 float* GetCameraTargetAll(){
-    return cam.target;
+    return g_Cam.target;
 }
 
 float* GetCameraUpAll(){
-    return cam.up;
+    return g_Cam.up;
 }
 
 float GetCameraFOV(){
-    return cam.fovy;
+    return g_Cam.fovy;
 }

@@ -2,8 +2,8 @@
 
 
 
-static int fpscount = 0;
-static int fps = 0;
+static int m_Fpscount = 0;
+static int m_Fps = 0;
 
 Uint64 GetTime(){
     return SDL_GetTicks64();
@@ -18,15 +18,15 @@ void CalculateFrameRate() {
         lasttime = currenttime;
         init = true;
     }
-    ++fpscount;
+    ++m_Fpscount;
     if (currenttime - lasttime >= 1000) {
         lasttime = currenttime;
-        fps = fpscount;
-        fpscount = 0;
+        m_Fps = m_Fpscount;
+        m_Fpscount = 0;
     }
 }
 
 
 int GetFPS(){
-    return fps;
+    return m_Fps;
 }

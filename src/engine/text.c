@@ -1,9 +1,9 @@
 #include "text.h"
-#include "../engine/render.h"
+#include "../engine/renderer.h"
 
 
 
-static const uint8_t kfont[128][8] = {
+static const uint8_t m_Kfont[128][8] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0020 (space)
     { 0x18, 0x3C, 0x3C, 0x18, 0x18, 0x00, 0x18, 0x00},   // U+0021 (!)
     { 0x36, 0x36, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0022 (")
@@ -109,7 +109,7 @@ static inline void InGameDrawCharacter(float x, float y, float size, char c) {
         return;
     }
 
-    const uint8_t *bitmap = kfont[c - 32]; 
+    const uint8_t *bitmap = m_Kfont[c - 32]; 
 
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 6; j++) {

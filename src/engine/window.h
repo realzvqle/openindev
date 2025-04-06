@@ -17,9 +17,11 @@ bool IsWindowOpen();
 void SwapWindow();
 bool IsKeyDown(SDL_KeyCode key);
 bool IsKeyPressed(SDL_KeyCode key);
-void SetWindowTitle(char* title);
+void ChangeBackground(vec3 color);
 int GetWindowHeight();
 int GetWindowWidth();
+void SetWindowTitle(char* title);
+void SetWindowSize(vec2 size);
 void ShutdownWindow();
 void CleanupWindow();
 

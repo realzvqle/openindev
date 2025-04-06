@@ -1,7 +1,7 @@
 #include "controls.h"
 #include "engine/internals.h"
 #include "engine/model.h"
-#include "engine/render.h"
+#include "engine/renderer.h"
 #include "engine/text.h"
 #include "engine/window.h"
 #include "externincludes/SDL2/SDL_keycode.h"
@@ -28,16 +28,16 @@ int main(int argc, char* argv[])
     if(result == false) return -1;
     
 
-    glm_vec3_copy((vec3){0.0, 0.0, -5.0}, cubes[amount].position);
-    cubes[amount].position[2]+=1;
-    amount++;
-    Model mod = LoadModel("resources/untitled.obj");
+    // glm_vec3_copy((vec3){0.0, 0.0, -5.0}, cubes[amount].position);
+    // cubes[amount].position[2]+=1;
+    // amount++;
+    Model mod = LoadModel("resources/miku.obj");
     while(IsWindowOpen()){
         UpdateCamera();
         char buffer[512];
         sprintf(buffer, "Open Indev - %d FPS", GetFPS());
         SetWindowTitle(buffer);
-        RenderModel(&mod, 0.2, (vec3){-0.5, -0.5, -5.0});
+        RenderModel(&mod, 0.001, (vec3){-0.5, -0.5, 5.0});
         //DrawGameText(-0.5, -0.5, "Hello", 0.2);
         for(int i = 0; i < amount; i++){
             RenderCube(0.5, cubes[i].position, (vec3){0, 0, 0}, false);        
@@ -47,10 +47,19 @@ int main(int argc, char* argv[])
             cubes[amount].position[2]+=1;
             amount++;
         }
+        if(IsKeyPressed(SDLK_n)){
+            ChangeBackground((vec4){0.0, 0.5, 0.5, 1.0});
+        }
+        if(IsKeyPressed(SDLK_b)){
+            SetWindowSize((vec2){800, 600});
+            ChangeBackground((vec4){0.0, 0.2, 0.2, 1.0});
+        }
         UpdateControls();
         SwapWindow();
     }
     CleanupWindow();
+    UnloadModel(&mod);
+    info("Closed!\n");
     return 0;
 }
 
