@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
         char buffer[512];
         sprintf(buffer, "Open Indev - %d FPS", GetFPS());
         SetWindowTitle(buffer);
+        DrawGameText(-0.5, -0.5, "zvqle is cool", 0.1);
         RenderModel(&mod, 0.001, (vec3){-0.5, -0.5, 5.0});
         //DrawGameText(-0.5, -0.5, "Hello", 0.2);
         for(int i = 0; i < amount; i++){

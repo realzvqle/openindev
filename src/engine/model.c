@@ -4,9 +4,9 @@
 
 /*
 
-Open-Indev Model Loading System
+    Open-Indev Model Loading System
 
-NOT READY FOR USE, DO NOT USE THIS IN THE BASE GAME - zvqle
+    NOT READY FOR USE, DO NOT USE THIS IN THE BASE GAME - zvqle
 
 
 */
@@ -83,6 +83,7 @@ void UnloadModel(Model* mod){
     free(mod->vertices);
     free(mod->indices);
     mod->vamount = 0;
+    mod->iamount = 0;
     mod->pass = false;
 }
 
