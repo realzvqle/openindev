@@ -43,14 +43,14 @@ void UpdateControls() {
     glm_vec3_cross(right, forward, up);
     glm_vec3_normalize(up);
 
-    vec3 rotation_adjusted;
+    vec3 rotationAdjusted;
     vec3 res;
 
-    glm_vec3_scale(right, mouse_delta[0], rotation_adjusted);  
+    glm_vec3_scale(right, mouse_delta[0], rotationAdjusted);  
     glm_vec3_scale(up, mouse_delta[1], up);  
 
-    glm_vec3_add(rotation_adjusted, up, rotation_adjusted);
-    glm_vec3_add(rotation_adjusted, forward, res);
+    glm_vec3_add(rotationAdjusted, up, rotationAdjusted);
+    glm_vec3_add(rotationAdjusted, forward, res);
 
     glm_vec3_add(g_Cam.pos, res, g_Cam.target); 
 SKIPROT:

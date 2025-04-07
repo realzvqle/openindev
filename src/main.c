@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
         } 
         if(IsMouseButtonPressed(SDL_BUTTON_LEFT)){
             vec3 res;
-            glm_ray_at(g_Cam.target, g_Cam.pos, 0, res);
+            glm_ray_at(g_Cam.target, g_Cam.target, 0, res);
             glm_vec3_copy(res, cubes[amount].position);
             cubes[amount].position[2]+=1;
             amount++;
