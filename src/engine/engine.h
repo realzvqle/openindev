@@ -1,17 +1,17 @@
-#ifndef SUPERHEADER_H_INCLUDED
-#define SUPERHEADER_H_INCLUDED
+#ifndef ENGINE_H_INCLUDED
+#define ENGINE_H_INCLUDED
 
 
 
 
-#include "externincludes/SDL2/SDL.h"
-#include "externincludes/SDL2/SDL_error.h"
-#include "externincludes/SDL2/SDL_events.h"
-#include "externincludes/cglm/vec3.h"
-#include "externincludes/glad.h"
+#include "external/SDL2/SDL.h"
+#include "external/SDL2/SDL_error.h"
+#include "external/SDL2/SDL_events.h"
+#include "external/cglm/vec3.h"
+#include "external/glad.h"
 #include <stdbool.h>
 #include <stdio.h>
-#include "externincludes/cglm/cglm.h"
+#include "external/cglm/cglm.h"
 #define fail(message, ...) printf("[-] " message, ##__VA_ARGS__)
 #define pass(message, ...) printf("[+] " message, ##__VA_ARGS__)
 #define info(message, ...) printf("[!] " message, ##__VA_ARGS__)

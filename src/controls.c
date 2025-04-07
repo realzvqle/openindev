@@ -3,8 +3,6 @@
 #include "engine/internals.h"
 #include "engine/renderer.h"
 #include "engine/window.h"
-#include "externincludes/SDL2/SDL_keycode.h"
-#include "externincludes/cglm/vec3.h"
 
 extern Camera g_Cam;
 

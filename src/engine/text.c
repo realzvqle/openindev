@@ -1,6 +1,5 @@
 #include "text.h"
-#include "../engine/renderer.h"
-
+#include "renderer.h"
 
 
 static const uint8_t m_Kfont[128][8] = {

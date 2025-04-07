@@ -1,7 +1,6 @@
 #include "terrain.h"
 #include "engine/internals.h"
 #include "engine/renderer.h"
-#include "externincludes/SDL2/SDL_thread.h"
 #include <stdbool.h>
 
 

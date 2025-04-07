@@ -4,11 +4,8 @@
 #include "engine/renderer.h"
 #include "engine/text.h"
 #include "engine/window.h"
-#include "externincludes/SDL2/SDL_keycode.h"
-#include "externincludes/SDL2/SDL_mouse.h"
-#include "externincludes/SDL2/SDL_video.h"
-#include "externincludes/cglm/ray.h"
-#include "superheader.h"
+
+#include "openindev.h"
 #include "terrain.h"
 
 extern Camera g_Cam;
