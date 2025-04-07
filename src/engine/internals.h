@@ -14,6 +14,7 @@
 void CalculateFrameRate();
 Uint64 GetTime();
 int GetFPS();
-
+void CalculateDeltaTime();
+double GetDeltaTime();
 
 #endif

@@ -4,6 +4,8 @@
 
 static int m_Fpscount = 0;
 static int m_Fps = 0;
+static int m_Prevtime = 0;
+static int m_Curtime = 0;
 
 Uint64 GetTime(){
     return SDL_GetTicks64();
@@ -29,4 +31,14 @@ void CalculateFrameRate() {
 
 int GetFPS(){
     return m_Fps;
+}
+
+
+void CalculateDeltaTime(){
+    m_Prevtime = m_Curtime;
+    m_Curtime = GetTime();
+}
+
+double GetDeltaTime(){
+    return m_Curtime - m_Prevtime;
 }

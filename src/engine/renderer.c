@@ -125,17 +125,7 @@ void SetupCamera() {
     UpdateCamera();
 }
 
-void ChangeCameraPositionX(float amount){
-    g_Cam.pos[0] += amount;
-}
 
-void ChangeCameraPositionY(float amount){
-    g_Cam.pos[1] += amount;
-}
-
-void ChangeCameraPositionZ(float amount){
-    g_Cam.pos[2] += amount; 
-}
 
 void UpdateCamera() {
     mat4 view_matrix;

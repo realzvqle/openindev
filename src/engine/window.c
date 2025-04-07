@@ -13,6 +13,15 @@ static vec4 m_BackgroundColor;
 static SDL_KeyCode m_Keydown;
 static SDL_KeyCode m_Keypressed;
 
+static int m_Mouse3dtotalX = 0;
+static int m_Mouse3dtotalY = 0;
+
+static SDL_KeyCode m_MouseButtonDown;
+static Uint8 m_MousePressed;
+static Uint8 m_MouseDown;
+
+
+static bool m_MouseMoved = false;
 bool InitWindow(int width, int height, const char* title, Uint32 flags){
     #ifdef _WIN32
     SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOALIGNMENTFAULTEXCEPT | SEM_NOGPFAULTERRORBOX);
@@ -68,6 +77,52 @@ bool IsKeyDown(SDL_KeyCode key){
     return false;
 }
 
+
+
+void UpdateMousePositionFor3d() {  
+    int deltaX, deltaY;
+    SDL_GetRelativeMouseState(&deltaX, &deltaY);
+    m_Mouse3dtotalX += deltaX;
+    m_Mouse3dtotalY += deltaY;
+}
+
+int GetMousePositionFor3dX() {
+    return m_Mouse3dtotalX;
+}
+
+int GetMousePositionFor3dY() {
+    return m_Mouse3dtotalY;
+}
+
+int GetMousePositionX(){
+    int x;
+    SDL_GetMouseState(&x, NULL);
+    return x;
+}
+
+int GetMousePositionY(){
+    int y;
+    SDL_GetMouseState(NULL, &y);
+    return y;
+}
+
+
+void LockMouse() {
+    SDL_SetRelativeMouseMode(SDL_TRUE);
+}
+
+
+bool IsMouseButtonPressed(Uint8 mouse){
+    if(m_MousePressed == mouse){
+        m_MousePressed = -1;
+        return true;
+    } else return false;
+}
+
+bool DidMouseMove(){
+    return m_MouseMoved;
+}
+
 int GetWindowWidth(){
     int h;
     int w;
@@ -90,6 +145,7 @@ void SetWindowSize(vec2 size){
     SDL_SetWindowSize(m_Window, size[0], size[1]);
 }
 
+
 bool IsWindowOpen(){
     while (SDL_PollEvent(&m_Event)) {
         if (m_Event.type == SDL_QUIT) {
@@ -111,10 +167,18 @@ bool IsWindowOpen(){
         if(m_Event.type == SDL_KEYDOWN){
             m_Keydown = m_Event.key.keysym.sym;   
         } 
+        if(m_Event.type == SDL_MOUSEMOTION){
+            m_MouseMoved = true;
+        } else m_MouseMoved = false;
+        if(m_Event.type == SDL_MOUSEBUTTONDOWN){
+            m_MousePressed = m_Event.button.button;
+            m_MouseButtonDown = true;
+        } else m_MouseButtonDown = false;
     }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glClearColor(m_BackgroundColor[0], m_BackgroundColor[1], m_BackgroundColor[2], m_BackgroundColor[3]);
     CalculateFrameRate();
+    CalculateDeltaTime();
     return m_Running;
 }
 

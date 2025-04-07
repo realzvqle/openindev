@@ -22,9 +22,6 @@ typedef struct _Camera {
 
 
 void SetupCamera();
-void ChangeCameraPositionX(float amount);
-void ChangeCameraPositionY(float amount);
-void ChangeCameraPositionZ(float amount);
 void ApplyCameraTransform();
 void UpdateCamera();
 float* GetCameraPositionAll();
