@@ -11,7 +11,6 @@ extern Camera g_Cam;
 
 void UpdateControls() {
     UpdateMousePositionFor3d();
-    info("%d-%d\n", GetMousePositionFor3dX(), GetMousePositionFor3dY());
     static vec2 previousMousePos = {0.0f, 0.0f};  
 
     float speed = 0.1f * GetDeltaTime();

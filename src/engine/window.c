@@ -1,5 +1,6 @@
 #include "window.h"
 #include "internals.h"
+#include "renderer.h"
 
 
 
@@ -59,6 +60,7 @@ bool InitWindow(int width, int height, const char* title, Uint32 flags){
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL); 
+    SetupCamera();
     return true;
 }
 
@@ -179,6 +181,7 @@ bool IsWindowOpen(){
     glClearColor(m_BackgroundColor[0], m_BackgroundColor[1], m_BackgroundColor[2], m_BackgroundColor[3]);
     CalculateFrameRate();
     CalculateDeltaTime();
+    UpdateCamera();
     return m_Running;
 }
 

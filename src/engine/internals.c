@@ -1,4 +1,5 @@
 #include "internals.h"
+#include "window.h"
 
 
 
@@ -41,4 +42,45 @@ void CalculateDeltaTime(){
 
 double GetDeltaTime(){
     return m_Curtime - m_Prevtime;
+}
+
+void UpdateWindowTitleWithFPS(char* title){
+    char buffer[512];
+    sprintf(buffer, "%s - %d FPS", title, GetFPS());
+    SetWindowTitle(buffer);
+}
+
+static inline uint32_t xorshift32(uint32_t state[static 1])
+{
+    uint32_t x = state[0];
+    x ^= x << 13;
+    x ^= x >> 17;
+    x ^= x << 5;
+    state[0] = x;
+    return x;
+}
+
+uint32_t GenerateRandomValueEx(uint32_t seed) {
+    uint32_t state[1];
+    state[0] = seed; 
+    uint32_t random_number = xorshift32(state);
+
+    return random_number;
+}
+
+uint32_t GenerateRandomValueWithinRangeEx(uint32_t seed, uint32_t min, uint32_t max) {
+    uint32_t state[1];
+    state[0] = seed; 
+    uint32_t random_number = xorshift32(state);
+
+    return (random_number % (max - min + 1)) + min;
+}
+
+
+uint32_t GenerateRandomValue() {
+    return GenerateRandomValueEx(GetTime());
+}
+
+uint32_t GenerateRandomValueWithinRange(uint32_t min, uint32_t max) {
+    return GenerateRandomValueWithinRangeEx(GetTime(), min, max);
 }
