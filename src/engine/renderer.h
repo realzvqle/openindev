@@ -8,10 +8,12 @@
 
 
 #include "engine.h"
+#include "textures.h"
 
 
 void RenderSquares(float size, vec3 pos, vec3 color);
 void RenderSquares_2(float size, vec3 pos);
+void RenderSquares_e(float size, vec3 pos, Texture tex);
 void RenderCube(float size, vec3 pos, vec3 rot, bool isLines);
 typedef struct _Camera {
     vec3 pos;
@@ -28,4 +30,5 @@ float* GetCameraPositionAll();
 float* GetCameraTargetAll();
 float* GetCameraUpAll();
 float GetCameraFOV();
+void RenderCubeTex(float size, vec3 pos, vec3 rot, Texture tex, float texpos1, float texpos2, bool isLines);
 #endif

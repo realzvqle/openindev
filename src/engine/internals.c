@@ -84,3 +84,11 @@ uint32_t GenerateRandomValue() {
 uint32_t GenerateRandomValueWithinRange(uint32_t min, uint32_t max) {
     return GenerateRandomValueWithinRangeEx(GetTime(), min, max);
 }
+
+
+void vec3_distance(vec3 first, vec3 second, vec3 res){
+    res[0] = fabsf(first[0] - second[0]);
+    res[1] = fabsf(first[1] - second[1]);
+    res[2] = fabsf(first[2] - second[2]);
+    
+}

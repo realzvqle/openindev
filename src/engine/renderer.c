@@ -1,13 +1,13 @@
 #include "renderer.h"
+#include "engine.h"
 #include "text.h"
 #include "window.h"
 
 
 
-
 /*
 
-    Open-Indev Renderer  
+    KUPBLE Renderer  
 
 */
 
@@ -55,6 +55,33 @@ void RenderSquares_2(float size, vec3 pos) {
     glVertex3f(pos[0] - half, pos[1] + half, pos[2]);
     glEnd();
 }
+
+void RenderSquares_e(float size, vec3 pos, Texture tex) {
+    float half = size / 2.0f;
+    
+    glEnable(GL_TEXTURE_2D);  
+    glBindTexture(GL_TEXTURE_2D, tex.id);  
+
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f); 
+    glVertex3f(pos[0] - half, pos[1] - half, pos[2]); 
+
+    glTexCoord2f(1.0f, 0.0f); 
+    glVertex3f(pos[0] + half, pos[1] - half, pos[2]);
+
+    glTexCoord2f(1.0f, 1.0f); 
+    glVertex3f(pos[0] + half, pos[1] + half, pos[2]); 
+
+    glTexCoord2f(0.0f, 1.0f); 
+    glVertex3f(pos[0] - half, pos[1] + half, pos[2]);
+
+
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);  
+}
+
 
 void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
     glPushMatrix();  
@@ -104,6 +131,77 @@ void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
 
     glEnd();
     glPopMatrix();
+}
+
+void RenderCubeTex(float size, vec3 pos, vec3 rot, Texture tex, float texpos1, float texpos2, bool isLines) {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, tex.id);
+    glPushMatrix();  
+    glTranslatef(pos[0], pos[1], pos[2]);
+    glRotatef(rot[0], 1.0f, 0.0f, 0.0f);
+    glRotatef(rot[1], 0.0f, 1.0f, 0.0f); 
+    glRotatef(rot[2], 0.0f, 0.0f, 1.0f); 
+
+    float half = size / 2.0f;
+    isLines ? glBegin(GL_LINES) : glBegin(GL_QUADS);
+
+    glTexCoord2f(texpos2, texpos2); 
+    glVertex3f(-half, -half,  half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f( half, -half,  half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f( half,  half,  half);
+    glTexCoord2f(texpos2, texpos1); 
+    glVertex3f(-half,  half,  half);
+
+    glTexCoord2f(texpos2, texpos2); 
+    glVertex3f(-half, -half, -half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f( half, -half, -half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f( half,  half, -half);
+    glTexCoord2f(texpos2, texpos1); 
+    glVertex3f(-half,  half, -half);
+
+    glTexCoord2f(texpos2, texpos2);
+    glVertex3f(-half,  half, -half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f( half,  half, -half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f( half,  half,  half);
+    glTexCoord2f(texpos2, texpos1);
+    glVertex3f(-half,  half,  half);
+
+    glTexCoord2f(texpos2, texpos2);
+    glVertex3f(-half, -half, -half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f( half, -half, -half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f( half, -half,  half);
+    glTexCoord2f(texpos2, texpos1);
+    glVertex3f(-half, -half,  half);
+
+    glTexCoord2f(texpos2, texpos2);
+    glVertex3f( half, -half, -half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f( half,  half, -half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f( half,  half,  half);
+    glTexCoord2f(texpos2, texpos1);
+    glVertex3f( half, -half,  half);
+
+    glTexCoord2f(texpos2, texpos2);
+    glVertex3f(-half, -half, -half);
+    glTexCoord2f(texpos1, texpos2); 
+    glVertex3f(-half,  half, -half);
+    glTexCoord2f(texpos1, texpos1); 
+    glVertex3f(-half,  half,  half);
+    glTexCoord2f(texpos2, texpos1);
+    glVertex3f(-half, -half,  half);
+
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 }
 
 

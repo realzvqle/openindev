@@ -9,7 +9,7 @@ static SDL_Event m_Event;
 static SDL_GLContext m_GlContext;
 static SDL_Window* m_Window;
 
-static vec4 m_BackgroundColor;
+static vec4 m_BackgroundColor = (vec4){0.0f, 0.2f, 0.6f};
 
 static SDL_KeyCode m_Keydown;
 static SDL_KeyCode m_Keypressed;

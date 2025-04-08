@@ -3,6 +3,8 @@
 #include "engine/internals.h"
 #include "engine/renderer.h"
 #include "engine/window.h"
+#include "state.h"
+#include "terrain.h"
 
 extern Camera g_Cam;
 
@@ -11,7 +13,7 @@ void UpdateControls() {
     UpdateMousePositionFor3d();
     static vec2 previousMousePos = {0.0f, 0.0f};  
 
-    float speed = 0.1f * GetDeltaTime();
+    float speed = 0.05f * GetDeltaTime();
     float sensitivity = 1;
     vec2 mousePos = {
         (2.0f * GetMousePositionFor3dX()) / GetWindowWidth() - 1.0f,
@@ -50,7 +52,12 @@ void UpdateControls() {
     glm_vec3_add(rotationAdjusted, forward, res);
 
     glm_vec3_add(g_Cam.pos, res, g_Cam.target); 
-SKIPROT:
+    if(GetGameMode() == SURVIVAL){
+        if(CheckIfCollidedWithBlock(g_Cam.pos) == false){
+            g_Cam.pos[1] -= 0.01 * GetDeltaTime();
+        } 
+    }    
+    
     
     if (IsKeyDown(SDLK_a)) {
         vec3 scale;
@@ -67,13 +74,38 @@ SKIPROT:
     if (IsKeyDown(SDLK_s)) {
         vec3 scale;
         glm_vec3_scale(forward, speed, scale);
+        float befpos = g_Cam.pos[1];
+        float beftar = g_Cam.target[1];
         glm_vec3_sub(g_Cam.pos, scale, g_Cam.pos);
         glm_vec3_sub(g_Cam.target, scale, g_Cam.target);
+        if(GetGameMode() == SURVIVAL){
+            g_Cam.pos[1] = befpos;
+            g_Cam.target[1] = beftar;
+        }
     }
     if (IsKeyDown(SDLK_w)) {
         vec3 scale;
         glm_vec3_scale(forward, speed, scale);
-        glm_vec3_add(g_Cam.pos, scale, g_Cam.pos);
+        float befpos = g_Cam.pos[1];
+        float beftar = g_Cam.target[1];
+        glm_vec3_add(g_Cam.pos, scale, g_Cam.pos);  
         glm_vec3_add(g_Cam.target, scale, g_Cam.target);
+        if(GetGameMode() == SURVIVAL){
+            g_Cam.pos[1] = befpos;
+            g_Cam.target[1] = beftar;
+        }
     }
+    if(IsMouseButtonPressed(SDL_BUTTON_LEFT)){
+        vec3 sub;
+        vec3 res;
+        glm_vec3_sub(g_Cam.target, g_Cam.pos, sub);
+        glm_vec3_normalize(sub);
+        glm_ray_at(g_Cam.target, sub, 0.5, res);
+
+        CreateBlock(res);
+    }
+    if(IsKeyPressed(SDLK_p)) SetGameMode(CREATIVE);
+    else if(IsKeyPressed(SDLK_l)) SetGameMode(SURVIVAL);
+    if(IsKeyPressed(SDLK_ESCAPE)) ShutdownWindow();
+    if(IsKeyPressed(SDLK_o)) DeleteRandomBlock();
 }
