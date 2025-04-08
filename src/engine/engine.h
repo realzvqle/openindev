@@ -17,6 +17,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "external/cglm/cglm.h"
+#include <string.h>
 #define fail(message, ...) printf("[-] " message, ##__VA_ARGS__)
 #define pass(message, ...) printf("[+] " message, ##__VA_ARGS__)
 #define info(message, ...) printf("[!] " message, ##__VA_ARGS__)

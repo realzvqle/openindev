@@ -83,7 +83,7 @@ static inline int UpdateFreeBlockList(){
     return 0;
 }
 static inline void StartCheckFreeBlockThread(){
-    SDL_CreateThread(UpdateFreeBlockList, "UpdateFreeBlockList", FALSE);
+    SDL_CreateThread(UpdateFreeBlockList, "UpdateFreeBlockList", false);
 }
 
 void SetupBlockingSystem(){
