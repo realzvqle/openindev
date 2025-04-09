@@ -1,4 +1,5 @@
 #include "window.h"
+#include "external/SDL2/SDL_render.h"
 #include "internals.h"
 #include "renderer.h"
 
@@ -20,7 +21,7 @@ static int m_Mouse3dtotalY = 0;
 static SDL_KeyCode m_MouseButtonDown;
 static Uint8 m_MousePressed;
 static Uint8 m_MouseDown;
-
+static SDL_Renderer* m_SdlRenderer;
 
 static bool m_MouseMoved = false;
 bool InitWindow(int width, int height, const char* title, Uint32 flags){
@@ -60,6 +61,7 @@ bool InitWindow(int width, int height, const char* title, Uint32 flags){
     glViewport(0, 0, width, height);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL); 
+
     SetupCamera();
     return true;
 }

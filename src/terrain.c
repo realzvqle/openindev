@@ -89,6 +89,7 @@ static inline void StartCheckFreeBlockThread(){
 void SetupBlockingSystem(){
     StartCheckFreeBlockThread();
     LoadAllTextures();
+    GenerateTerrain();
 }
 
 void CleanupBlockingSystem(){
@@ -132,7 +133,7 @@ void CreateBlock(vec3 pos){
     pos[2] = roundf(pos[2]/ 0.5) * 0.5;
     glm_vec3_copy(pos, m_Blocks[m_NextBlock].position);
     m_Blocks[m_NextBlock].position[2]+=1;
-    m_Blocks[m_BlockAmount].tex = COBBLESTONE;
+    m_Blocks[m_BlockAmount].tex = BEDROCK;
     m_Blocks[m_NextBlock].isActive = true;
 }
 
@@ -142,8 +143,8 @@ void DeleteRandomBlock(){
 }
 
 void GenerateTerrain(){
-    for(int i = 0; i > -20; i--){
-        for(int j = 0; j < 10; j++){
+    for(int i = 0; i > -25; i--){
+        for(int j = 0; j < 11; j++){
             vec3 pos = {j * 0.5, -3, i * 0.5};
             CreateFirstBlocks(pos);
         }

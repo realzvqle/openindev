@@ -4,7 +4,7 @@
 
 /*
 
-    Open-Indev Model Loading System
+    Kupble Model Loading System
 
     NOT READY FOR USE, DO NOT USE THIS IN THE BASE GAME - zvqle
 

@@ -137,6 +137,3 @@ void DrawGameText(float x, float y, char* s, float size) {
     }
 }
 
-void DrawUIText(){
-    
-}

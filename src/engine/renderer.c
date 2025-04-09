@@ -7,7 +7,7 @@
 
 /*
 
-    KUPBLE Renderer  
+    Kupble Renderer  
 
 */
 
@@ -83,6 +83,7 @@ void RenderSquares_e(float size, vec3 pos, Texture tex) {
 }
 
 
+
 void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
     glPushMatrix();  
     glTranslatef(pos[0], pos[1], pos[2]);
@@ -142,9 +143,10 @@ void RenderCubeTex(float size, vec3 pos, vec3 rot, Texture tex, float texpos1, f
     glRotatef(rot[1], 0.0f, 1.0f, 0.0f); 
     glRotatef(rot[2], 0.0f, 0.0f, 1.0f); 
 
+    
     float half = size / 2.0f;
     isLines ? glBegin(GL_LINES) : glBegin(GL_QUADS);
-
+    glColor3f(1.0f, 1.0f, 1.0f);
     glTexCoord2f(texpos2, texpos2); 
     glVertex3f(-half, -half,  half);
     glTexCoord2f(texpos1, texpos2); 
@@ -207,7 +209,7 @@ void RenderCubeTex(float size, vec3 pos, vec3 rot, Texture tex, float texpos1, f
 
 
 void SetupCamera() {
-    glm_vec3_copy((vec3){0.0f, 0.0f, -5.0f}, g_Cam.pos);
+    glm_vec3_copy((vec3){1.0f, 1.0f, -5.0f}, g_Cam.pos);
     glm_vec3_copy((vec3){0.0f, 0.0f, 0.0f}, g_Cam.target);
     glm_vec3_copy((vec3){0.0f, 1.0f, 0.0f}, g_Cam.up);
     g_Cam.fovy = glm_rad(90.0f);
@@ -223,7 +225,10 @@ void SetupCamera() {
     UpdateCamera();
 }
 
+void DrawUIText(float x, float y, vec3 color, char* text) {
+    RenderSquares_2(0.2, (vec3){0.5, 0.5, 5.0});
 
+}
 
 void UpdateCamera() {
     mat4 view_matrix;
