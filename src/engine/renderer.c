@@ -134,6 +134,53 @@ void RenderCube(float size, vec3 pos, vec3 rot, bool isLines) {
     glPopMatrix();
 }
 
+void RenderRectangularPrism(float length, float width, float height, vec3 pos, vec3 rot, vec3 color, bool isLines) {
+    glPushMatrix();  
+    glTranslatef(pos[0], pos[1], pos[2]);
+    glRotatef(rot[0], 1.0f, 0.0f, 0.0f);
+    glRotatef(rot[1], 0.0f, 1.0f, 0.0f); 
+    glRotatef(rot[2], 0.0f, 0.0f, 1.0f); 
+
+    float halfx = width / 2.0f;
+    float halfy = height / 2.0f;
+    float halfz = length / 2.0f;
+    isLines ? glBegin(GL_LINES) : glBegin(GL_QUADS);
+
+    glColor3f(color[0], color[1], color[2]); 
+    glVertex3f(-halfx, -halfy,  halfz);
+    glVertex3f( halfx, -halfy,  halfz);
+    glVertex3f( halfx,  halfy,  halfz);
+    glVertex3f(-halfx,  halfy,  halfz);
+
+    glVertex3f(-halfx, -halfy, -halfz);
+    glVertex3f( halfx, -halfy, -halfz);
+    glVertex3f( halfx,  halfy, -halfz);
+    glVertex3f(-halfx,  halfy, -halfz);
+
+    glVertex3f(-halfx,  halfy, -halfz);
+    glVertex3f( halfx,  halfy, -halfz);
+    glVertex3f( halfx,  halfy,  halfz);
+    glVertex3f(-halfx,  halfy,  halfz);
+
+    glVertex3f(-halfx, -halfy, -halfz);
+    glVertex3f( halfx, -halfy, -halfz);
+    glVertex3f( halfx, -halfy,  halfz);
+    glVertex3f(-halfx, -halfy,  halfz);
+
+    glVertex3f( halfx, -halfy, -halfz);
+    glVertex3f( halfx,  halfy, -halfz);
+    glVertex3f( halfx,  halfy,  halfz);
+    glVertex3f( halfx, -halfy,  halfz);
+
+    glVertex3f(-halfx, -halfy, -halfz);
+    glVertex3f(-halfx,  halfy, -halfz);
+    glVertex3f(-halfx,  halfy,  halfz);
+    glVertex3f(-halfx, -halfy,  halfz);
+
+    glEnd();
+    glPopMatrix();
+}
+
 void RenderCubeTex(float size, vec3 pos, vec3 rot, Texture tex, float texpos1, float texpos2, bool isLines) {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, tex.id);

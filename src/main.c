@@ -28,15 +28,14 @@ int main(int argc, char* argv[])
     LockMouse();
     SetupBlockingSystem();
     SetGameMode(CREATIVE);
-    
+    vec3 pos = {0.0, 0.0, -5.0};
+
     while(IsWindowOpen()){
         UpdateWindowTitleWithFPS("Open Indev");
-        DrawGameText(-0.5, -0.5, "zvqle is cool", 0.1);
-        RenderPlayer();
+        RenderPlayer((vec3){0.0, 0.0, -5.0}, (vec3){90.0f, 90.0f, 90.0f}, NULL, NULL);
+        DrawGameText(-0.5, -0.5, "zvqle is cool", 0.1);        
         UpdateControls();
-
         RenderBlocks();    
-
         SwapWindow();
     }
     CleanupBlockingSystem();

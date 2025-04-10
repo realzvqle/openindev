@@ -12,7 +12,7 @@
 
 
 
-void RenderPlayer();
+void RenderPlayer(vec3 pos, vec3 rotation, float* legpos, float* headpos);
 
 
 

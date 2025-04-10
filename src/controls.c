@@ -3,6 +3,7 @@
 #include "engine/internals.h"
 #include "engine/renderer.h"
 #include "engine/window.h"
+#include "player.h"
 #include "state.h"
 #include "terrain.h"
 
@@ -10,6 +11,7 @@ extern Camera g_Cam;
 
 
 void UpdateControls() {
+    
     UpdateMousePositionFor3d();
     static vec2 previousMousePos = {0.0f, 0.0f};  
 
@@ -52,8 +54,12 @@ void UpdateControls() {
     glm_vec3_add(rotationAdjusted, forward, res);
 
     glm_vec3_add(g_Cam.pos, res, g_Cam.target); 
+    float leg;
+    float head;
+    RenderPlayer((vec3){g_Cam.pos[0], g_Cam.pos[1] - 0.4, g_Cam.pos[2] - 0.3}, g_Cam.target, &leg, &head);
+    
     if(GetGameMode() == SURVIVAL){
-        if(CheckIfCollidedWithBlock(g_Cam.pos) == false){
+        if(CheckIfCollidedWithBlock((vec3){g_Cam.pos[0], leg, g_Cam.pos[2]}) == false){
             g_Cam.pos[1] -= 0.01 * GetDeltaTime();
         } 
     }    
